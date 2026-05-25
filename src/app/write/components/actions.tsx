@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useWriteStore } from '../stores/write-store'
@@ -7,21 +7,11 @@ import { usePreviewStore } from '../stores/preview-store'
 import { usePublish } from '../hooks/use-publish'
 
 export function WriteActions() {
-	const { loading, mode, form, loadBlogForEdit, originalSlug, updateForm } = useWriteStore()
+	const { loading, mode, form, originalSlug, updateForm } = useWriteStore()
 	const { openPreview } = usePreviewStore()
-	const { isAuth, onChoosePrivateKey, onPublish, onDelete } = usePublish()
-	const [saving, setSaving] = useState(false)
-	const keyInputRef = useRef<HTMLInputElement>(null)
+	const { onPublish, onDelete } = usePublish()
 	const mdInputRef = useRef<HTMLInputElement>(null)
 	const router = useRouter()
-
-	const handleImportOrPublish = () => {
-		if (!isAuth) {
-			keyInputRef.current?.click()
-		} else {
-			onPublish()
-		}
-	}
 
 	const handleCancel = () => {
 		if (!window.confirm('放弃本次修改吗？')) {
@@ -34,13 +24,9 @@ export function WriteActions() {
 		}
 	}
 
-	const buttonText = isAuth ? (mode === 'edit' ? '更新' : '发布') : '导入密钥'
+	const buttonText = mode === 'edit' ? '保存到本地' : '保存到本地'
 
 	const handleDelete = () => {
-		if (!isAuth) {
-			toast.info('请先导入密钥')
-			return
-		}
 		const confirmMsg = form?.title ? `确定删除《${form.title}》吗？该操作不可恢复。` : '确定删除当前文章吗？该操作不可恢复。'
 		if (window.confirm(confirmMsg)) {
 			onDelete()
@@ -68,17 +54,6 @@ export function WriteActions() {
 
 	return (
 		<>
-			<input
-				ref={keyInputRef}
-				type='file'
-				accept='.pem'
-				className='hidden'
-				onChange={async e => {
-					const f = e.target.files?.[0]
-					if (f) await onChoosePrivateKey(f)
-					if (e.currentTarget) e.currentTarget.value = ''
-				}}
-			/>
 			<input ref={mdInputRef} type='file' accept='.md' className='hidden' onChange={handleMdFileChange} />
 
 			<ul className='absolute top-4 right-6 flex items-center gap-2'>
@@ -103,7 +78,7 @@ export function WriteActions() {
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
-							disabled={saving}
+							disabled={loading}
 							className='bg-card rounded-xl border px-4 py-2 text-sm'>
 							取消
 						</motion.button>
@@ -137,7 +112,7 @@ export function WriteActions() {
 					whileTap={{ scale: 0.95 }}
 					className='brand-btn px-6'
 					disabled={loading}
-					onClick={handleImportOrPublish}>
+					onClick={onPublish}>
 					{buttonText}
 				</motion.button>
 			</ul>

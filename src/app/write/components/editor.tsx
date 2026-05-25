@@ -160,19 +160,19 @@ export function WriteEditor() {
 			initial={{ opacity: 0, scale: 0.8 }}
 			animate={{ opacity: 1, scale: 1 }}
 			transition={{ delay: INIT_DELAY }}
-			className='bg-card flex min-h-[800px] w-[800px] flex-col rounded-[40px] border p-6 shadow'>
-			<div className='mb-3 flex gap-3'>
+			className='bg-card flex h-[calc(100vh-5.25rem)] max-h-[720px] min-h-[520px] w-[min(720px,calc(100vw-380px))] flex-col rounded-[32px] border p-4 shadow'>
+			<div className='mb-2 flex gap-2'>
 				<input
 					type='text'
 					placeholder='标题'
-					className='bg-card flex-1 rounded-lg border px-3 py-2 text-sm'
+					className='bg-card flex-1 rounded-lg border px-3 py-1.5 text-sm'
 					value={form.title}
 					onChange={e => updateForm({ title: e.target.value })}
 				/>
 				<input
 					type='text'
 					placeholder='slug（xx-xx）'
-					className='bg-card w-[200px] rounded-lg border px-3 py-2 text-sm'
+					className='bg-card w-[180px] rounded-lg border px-3 py-1.5 text-sm'
 					value={form.slug}
 					onChange={e => updateForm({ slug: e.target.value })}
 				/>
@@ -180,7 +180,7 @@ export function WriteEditor() {
 			<textarea
 				ref={textareaRef}
 				placeholder='Markdown 内容'
-				className='bg-card h-[650px] w-full flex-1 resize-none rounded-xl border p-4 text-sm'
+				className='bg-card min-h-0 w-full flex-1 resize-none overflow-y-auto rounded-xl border p-3 text-sm'
 				value={form.md}
 				onChange={e => updateForm({ md: e.target.value })}
 				onKeyDown={handleKeyDown}

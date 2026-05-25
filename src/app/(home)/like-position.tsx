@@ -9,17 +9,11 @@ export default function LikePosition() {
 	const center = useCenterStore()
 	const { cardStyles, siteContent } = useConfigStore()
 	const styles = cardStyles.likePosition
-	const hiCardStyles = cardStyles.hiCard
 	const socialButtonsStyles = cardStyles.socialButtons
 	const musicCardStyles = cardStyles.musicCard
-	const shareCardStyles = cardStyles.shareCard
 
-	const x =
-		styles.offsetX !== null ? center.x + styles.offsetX : center.x + hiCardStyles.width / 2 - socialButtonsStyles.width + shareCardStyles.width + CARD_SPACING
-	const y =
-		styles.offsetY !== null
-			? center.y + styles.offsetY
-			: center.y + hiCardStyles.height / 2 + CARD_SPACING + socialButtonsStyles.height + CARD_SPACING + musicCardStyles.height + CARD_SPACING
+	const x = styles.offsetX !== null ? center.x + styles.offsetX : 24 + socialButtonsStyles.width + CARD_SPACING + musicCardStyles.width + CARD_SPACING
+	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.height - styles.height - 24
 
 	return (
 		<HomeDraggableLayer cardKey='likePosition' x={x} y={y} width={styles.width} height={styles.height}>

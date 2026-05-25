@@ -31,16 +31,6 @@ export function SiteMetaForm({ formData, setFormData }: SiteMetaFormProps) {
 					/>
 				</div>
 			</div>
-
-			<div>
-				<label className='mb-2 block text-sm font-medium'>站点描述</label>
-				<textarea
-					value={formData.meta.description}
-					onChange={e => setFormData({ ...formData, meta: { ...formData.meta, description: e.target.value } })}
-					rows={3}
-					className='bg-secondary/10 w-full rounded-lg border px-4 py-2 text-sm'
-				/>
-			</div>
 		</>
 	)
 }

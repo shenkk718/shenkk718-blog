@@ -31,7 +31,7 @@ export default function EditBlogPage() {
 		<WritePreview form={form} coverPreviewUrl={coverPreviewUrl} onClose={closePreview} slug={slug} />
 	) : (
 		<>
-			<div className='flex h-full justify-center gap-6 px-6 pt-24 pb-12'>
+			<div className='flex min-h-screen justify-center gap-4 overflow-hidden px-5 pt-16 pb-5'>
 				<WriteEditor />
 				<WriteSidebar />
 			</div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useSize } from '@/hooks/use-size'
@@ -30,6 +30,7 @@ export function ProjectCard({ project, isEditMode = false, onUpdate, onDelete }:
 	const { maxSM } = useSize()
 	const [localProject, setLocalProject] = useState(project)
 	const [showImageDialog, setShowImageDialog] = useState(false)
+	const [showImagePreview, setShowImagePreview] = useState(false)
 	const [imageItem, setImageItem] = useState<ImageItem | null>(null)
 
 	const handleFieldChange = (field: keyof Project, value: any) => {
@@ -96,8 +97,14 @@ export function ProjectCard({ project, isEditMode = false, onUpdate, onDelete }:
 					<img
 						src={localProject.image}
 						alt={localProject.name}
-						className={cn('h-16 w-16 shrink-0 rounded-xl object-cover', canEdit && 'cursor-pointer')}
-						onClick={() => canEdit && setShowImageDialog(true)}
+						className={cn('h-16 w-16 shrink-0 rounded-xl object-cover cursor-pointer', canEdit && 'cursor-pointer')}
+						onClick={() => {
+							if (canEdit) {
+								setShowImageDialog(true)
+							} else {
+								setShowImagePreview(true)
+							}
+						}}
 					/>
 					{canEdit && (
 						<div className='pointer-events-none absolute inset-0 flex items-center justify-center rounded-xl bg-black/40 opacity-0 transition-opacity group-hover:opacity-100'>
@@ -212,6 +219,37 @@ export function ProjectCard({ project, isEditMode = false, onUpdate, onDelete }:
 			{canEdit && showImageDialog && (
 				<ImageUploadDialog currentImage={localProject.image} onClose={() => setShowImageDialog(false)} onSubmit={handleImageSubmit} />
 			)}
+
+			<AnimatePresence>
+				{showImagePreview && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						className='fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm'
+						onClick={() => setShowImagePreview(false)}>
+						<motion.div
+							initial={{ scale: 0.85, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 0.85, opacity: 0 }}
+							transition={{ type: 'spring', stiffness: 200, damping: 24 }}
+							className='relative w-[min(800px,90vw)] overflow-hidden rounded-3xl border border-white/30 bg-white/90 shadow-2xl backdrop-blur-xl'
+							onClick={e => e.stopPropagation()}>
+							<button
+								type='button'
+								onClick={() => setShowImagePreview(false)}
+								className='absolute top-3 right-3 z-50 grid size-8 place-items-center rounded-full bg-black/30 text-white/90 transition hover:bg-black/50'>
+								✕
+							</button>
+							<img src={localProject.image} alt={localProject.name} className='h-auto max-h-[80vh] w-full object-contain' />
+							<div className='px-5 pt-3 pb-5'>
+								<h3 className='text-lg font-semibold'>{localProject.name}</h3>
+								<p className='text-secondary mt-1 text-sm'>{localProject.description}</p>
+							</div>
+						</motion.div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</motion.div>
 	)
 }

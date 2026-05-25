@@ -19,9 +19,6 @@ export default function MusicCard() {
 	const center = useCenterStore()
 	const { cardStyles, siteContent } = useConfigStore()
 	const styles = cardStyles.musicCard
-	const hiCardStyles = cardStyles.hiCard
-	const clockCardStyles = cardStyles.clockCard
-	const calendarCardStyles = cardStyles.calendarCard
 
 	const [isPlaying, setIsPlaying] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState(0)
@@ -40,12 +37,11 @@ export default function MusicCard() {
 			}
 		}
 
-		// Default position on home page
 		return {
-			x: styles.offsetX !== null ? center.x + styles.offsetX : center.x + CARD_SPACING + hiCardStyles.width / 2 - styles.offset,
-			y: styles.offsetY !== null ? center.y + styles.offsetY : center.y - clockCardStyles.offset + CARD_SPACING + calendarCardStyles.height + CARD_SPACING
+			x: styles.offsetX !== null ? center.x + styles.offsetX : 24 + cardStyles.socialButtons.width + CARD_SPACING,
+			y: styles.offsetY !== null ? center.y + styles.offsetY : center.height - styles.height - 24
 		}
-	}, [isPlaying, isHomePage, center, styles, hiCardStyles, clockCardStyles, calendarCardStyles])
+	}, [isPlaying, isHomePage, center, styles, cardStyles.socialButtons.width])
 
 	const { x, y } = position
 

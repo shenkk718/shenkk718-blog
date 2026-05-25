@@ -15,12 +15,12 @@ export default function ArticleCard() {
 	const hiCardStyles = cardStyles.hiCard
 	const socialButtonsStyles = cardStyles.socialButtons
 
-	const x = styles.offsetX !== null ? center.x + styles.offsetX : center.x + hiCardStyles.width / 2 - socialButtonsStyles.width - CARD_SPACING - styles.width
-	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.y + hiCardStyles.height / 2 + CARD_SPACING
+	const x = styles.offsetX !== null ? center.x + styles.offsetX : 32
+	const y = styles.offsetY !== null ? center.y + styles.offsetY : typeof window !== 'undefined' ? window.innerHeight - styles.height - 80 : 600
 
 	return (
 		<HomeDraggableLayer cardKey='articleCard' x={x} y={y} width={styles.width} height={styles.height}>
-			<Card order={styles.order} width={styles.width} height={styles.height} x={x} y={y} className='space-y-2 max-sm:static'>
+			<Card order={styles.order} width={styles.width} height={styles.height} x={x} y={y} className='article-card-wrapper group border-none p-0 max-sm:static'>
 				{siteContent.enableChristmas && (
 					<>
 						<img
@@ -32,27 +32,32 @@ export default function ArticleCard() {
 					</>
 				)}
 
-				<h2 className='text-secondary text-sm'>最新文章</h2>
-
 				{loading ? (
-					<div className='flex h-[60px] items-center justify-center'>
+					<div className='flex h-full items-center justify-center'>
 						<span className='text-secondary text-xs'>加载中...</span>
 					</div>
 				) : blog ? (
-					<Link href={`/blog/${blog.slug}`} className='flex transition-opacity hover:opacity-80'>
-						{blog.cover ? (
-							<img src={blog.cover} alt='cover' className='mr-3 h-12 w-12 shrink-0 rounded-xl border object-cover' />
-						) : (
-							<div className='text-secondary mr-3 grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/60'>+</div>
-						)}
-						<div className='flex-1'>
-							<h3 className='line-clamp-1 text-sm font-medium'>{blog.title || blog.slug}</h3>
-							{blog.summary && <p className='text-secondary mt-1 line-clamp-3 text-xs'>{blog.summary}</p>}
-							<p className='text-secondary mt-3 text-xs'>{dayjs(blog.date).format('YYYY/M/D')}</p>
+					<Link href={`/blog/${blog.slug}`} className='block h-full px-4 py-3'>
+						<h2 className='text-[10px] font-medium text-[#c8944a]'>最新文章</h2>
+						<h3 className='mt-1 line-clamp-2 text-xs leading-snug font-semibold text-white'>{blog.title || blog.slug}</h3>
+						<p className='mt-1 text-[10px] text-white/50'>{dayjs(blog.date).format('YYYY/M/D')}</p>
+
+						<div className='article-card-expand mt-2 overflow-hidden'>
+							<div className='border-t border-white/15 pt-2'>
+								<div className='flex gap-2'>
+									{blog.cover ? <img src={blog.cover} alt='cover' className='h-10 w-10 shrink-0 rounded-lg object-cover' /> : null}
+									<div className='min-w-0 flex-1'>
+										<p className='line-clamp-3 text-[10px] leading-relaxed text-white/60'>{blog.summary || '点击查看更多文章内容...'}</p>
+									</div>
+								</div>
+								<div className='mt-2 flex items-center justify-end'>
+									<span className='inline-flex items-center gap-1 rounded-full bg-[#c8944a] px-2.5 py-0.5 text-[10px] font-medium text-white'>阅读全文 →</span>
+								</div>
+							</div>
 						</div>
 					</Link>
 				) : (
-					<div className='flex h-[60px] items-center justify-center'>
+					<div className='flex h-full items-center justify-center'>
 						<span className='text-secondary text-xs'>暂无文章</span>
 					</div>
 				)}

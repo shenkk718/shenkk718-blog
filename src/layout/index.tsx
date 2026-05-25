@@ -9,6 +9,7 @@ import { useSize, useSizeInit } from '@/hooks/use-size'
 import { useConfigStore } from '@/app/(home)/stores/config-store'
 import { ScrollTopButton } from '@/components/scroll-top-button'
 import MusicCard from '@/components/music-card'
+import ParticlesBackground from './backgrounds/particles'
 
 export default function Layout({ children }: PropsWithChildren) {
 	useCenterInit()
@@ -40,16 +41,21 @@ export default function Layout({ children }: PropsWithChildren) {
 				}
 			/>
 			{currentBackgroundImage && (
-				<div
-					className='fixed inset-0 z-0 overflow-hidden'
-					style={{
-						backgroundImage: `url(${currentBackgroundImage.url})`,
-						backgroundSize: 'cover',
-						backgroundPosition: 'center',
-						backgroundRepeat: 'no-repeat'
-					}}
-				/>
+				<>
+					<div
+						className='fixed inset-0 z-0 overflow-hidden opacity-100 contrast-110 saturate-125'
+						style={{
+							backgroundImage: `url(${currentBackgroundImage.url})`,
+							backgroundSize: 'cover',
+							backgroundPosition: maxSM ? '64% center' : 'center right',
+							backgroundRepeat: 'no-repeat'
+						}}
+					/>
+					<div className='pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.5)_34%,rgba(255,255,255,0.08)_66%,rgba(8,18,28,0.18)_100%)]' />
+					<div className='pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(circle_at_78%_30%,rgba(47,203,231,0.18),transparent_34%),radial-gradient(circle_at_88%_66%,rgba(125,18,56,0.28),transparent_32%),linear-gradient(180deg,rgba(20,37,48,0.02)_0%,rgba(20,37,48,0.16)_100%)]' />
+				</>
 			)}
+			<ParticlesBackground quantity={!maxSM ? 110 : 55} ease={80} />
 			<BlurredBubblesBackground colors={siteContent.backgroundColors} regenerateKey={regenerateKey} />
 
 			<main className='relative z-10 h-full'>

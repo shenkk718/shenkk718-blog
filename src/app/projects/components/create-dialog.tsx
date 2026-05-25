@@ -145,23 +145,6 @@ export default function CreateDialog({ project, onClose, onSave }: CreateDialogP
 					className='mt-3 w-full resize-none text-sm leading-relaxed focus:outline-none'
 					rows={4}
 				/>
-
-				<div className='mt-3 space-y-2'>
-					<input
-						type='url'
-						value={formData.github || ''}
-						onChange={e => setFormData({ ...formData, github: e.target.value || undefined })}
-						placeholder='GitHub URL（可选）'
-						className='w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:outline-none'
-					/>
-					<input
-						type='url'
-						value={formData.npm || ''}
-						onChange={e => setFormData({ ...formData, npm: e.target.value || undefined })}
-						placeholder='NPM URL（可选）'
-						className='w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:outline-none'
-					/>
-				</div>
 			</div>
 
 			<div className='mt-6 flex gap-3'>

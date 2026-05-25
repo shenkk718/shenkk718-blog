@@ -104,8 +104,8 @@ export default function SocialButtons() {
 		}
 	}, [openDropdowns])
 
-	const x = styles.offsetX !== null ? center.x + styles.offsetX : center.x + hiCardStyles.width / 2 - styles.width
-	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.y + hiCardStyles.height / 2 + CARD_SPACING
+	const x = styles.offsetX !== null ? center.x + styles.offsetX : 24
+	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.height - styles.height - 24
 
 	if (!showStates.container) return null
 

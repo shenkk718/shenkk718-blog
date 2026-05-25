@@ -7,10 +7,7 @@ import CalendarCard from '@/app/(home)/calendar-card'
 import SocialButtons from '@/app/(home)/social-buttons'
 import ShareCard from '@/app/(home)/share-card'
 import AritcleCard from '@/app/(home)/aritcle-card'
-import WriteButtons from '@/app/(home)/write-buttons'
-import LikePosition from './like-position'
-import HatCard from './hat-card'
-import BeianCard from './beian-card'
+import HomeDock from '@/app/(home)/home-dock'
 import { useSize } from '@/hooks/use-size'
 import { motion } from 'motion/react'
 import { useLayoutEditStore } from './stores/layout-edit-store'
@@ -55,6 +52,23 @@ export default function Home() {
 		<>
 			{siteContent.enableChristmas && <SnowfallBackground zIndex={0} count={!maxSM ? 125 : 20} />}
 
+			<motion.div
+				initial={{ opacity: 0, y: -12 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6, ease: 'easeOut' }}
+				className='pointer-events-none fixed top-8 left-8 z-20 text-[22px] leading-relaxed font-semibold tracking-wide text-slate-800 drop-shadow-sm max-sm:top-5 max-sm:left-5 max-sm:text-base'>
+				欢迎来到
+				<span className='relative mx-1 inline-block px-1'>
+					<span className='relative z-10'>shenkk</span>
+					<span className='absolute inset-x-0 bottom-0 z-0 h-3 -rotate-2 rounded-full bg-[#87CEFA]/75' />
+				</span>
+				的
+				<span className='relative mx-1 inline-block px-1'>
+					<span className='relative z-10'>博客</span>
+					<span className='absolute right-0 bottom-0 left-0 z-0 h-1 rounded-full bg-[#FF9800]' />
+				</span>
+			</motion.div>
+
 			{editing && (
 				<div className='pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center pt-6'>
 					<div className='pointer-events-auto flex items-center gap-3 rounded-2xl bg-white/80 px-4 py-2 shadow-lg backdrop-blur'>
@@ -84,11 +98,8 @@ export default function Home() {
 				{cardStyles.socialButtons?.enabled !== false && <SocialButtons />}
 				{!maxSM && cardStyles.shareCard?.enabled !== false && <ShareCard />}
 				{cardStyles.articleCard?.enabled !== false && <AritcleCard />}
-				{!maxSM && cardStyles.writeButtons?.enabled !== false && <WriteButtons />}
-				{cardStyles.likePosition?.enabled !== false && <LikePosition />}
-				{cardStyles.hatCard?.enabled !== false && <HatCard />}
-				{cardStyles.beianCard?.enabled !== false && <BeianCard />}
 			</div>
+			<HomeDock />
 
 			{siteContent.enableChristmas && <SnowfallBackground zIndex={2} count={!maxSM ? 125 : 20} />}
 			<ConfigDialog open={configDialogOpen} onClose={() => setConfigDialogOpen(false)} />

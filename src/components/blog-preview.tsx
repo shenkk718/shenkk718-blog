@@ -28,26 +28,26 @@ export function BlogPreview({ markdown, title, tags, date, summary, cover, slug 
 	}
 
 	return (
-		<div className='mx-auto flex max-w-[1140px] justify-center gap-6 px-6 pt-28 pb-12 max-sm:px-0'>
+		<div className='mx-auto flex max-w-[1000px] justify-center gap-5 px-5 pt-20 pb-8 max-sm:px-0'>
 			<motion.article
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: INIT_DELAY }}
-				className='card bg-article static flex-1 overflow-auto rounded-xl p-8'>
+				className='card bg-article static flex-1 overflow-auto rounded-xl p-6'>
 				<div>
-					<div className='text-center text-2xl font-semibold'>{title}</div>
+					<div className='text-center text-xl font-semibold'>{title}</div>
 
-					<div className='text-secondary mt-4 flex flex-wrap items-center justify-center gap-3 px-8 text-center text-sm'>
+					<div className='text-secondary mt-3 flex flex-wrap items-center justify-center gap-2 px-6 text-center text-xs'>
 						{tags.map(t => (
 							<span key={t}>#{t}</span>
 						))}
 					</div>
 
-					<div className='text-secondary mt-3 text-center text-sm'>{date}</div>
+					<div className='text-secondary mt-2 text-center text-xs'>{date}</div>
 
 					{summary && summaryInContent && <div className='text-secondary mt-6 cursor-text text-center text-sm'>“{summary}”</div>}
 
-					<div className='prose mt-6 max-w-none cursor-text'>{content}</div>
+					<div className='prose prose-sm mt-5 max-w-none cursor-text'>{content}</div>
 				</div>
 			</motion.article>
 

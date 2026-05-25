@@ -57,7 +57,7 @@ const list = [
 	}
 ]
 
-const extraSize = 8
+const extraSize = 10
 
 export default function NavCard() {
 	const pathname = usePathname()
@@ -85,7 +85,7 @@ export default function NavCard() {
 	}, [pathname])
 	if (maxSM) form = 'icons'
 
-	const itemHeight = form === 'full' ? 52 : 28
+	const itemHeight = form === 'full' ? 41 : 34
 
 	let position = useMemo(() => {
 		if (form === 'full') {
@@ -138,19 +138,19 @@ export default function NavCard() {
 						</>
 					)}
 
-					<Link className='flex items-center gap-3' href='/'>
-						<Image src='/images/avatar.png' alt='avatar' width={40} height={40} style={{ boxShadow: ' 0 12px 20px -5px #E2D9CE' }} className='rounded-full' />
-						{form === 'full' && <span className='font-averia mt-1 text-2xl leading-none font-medium'>{siteContent.meta.title}</span>}
-						{form === 'full' && <span className='text-brand mt-2 text-xs font-medium'>(开发中)</span>}
+					<Link className='flex items-center gap-2.5' href='/'>
+						<Image src='/images/avatar.png' alt='avatar' width={38} height={38} style={{ boxShadow: ' 0 12px 20px -5px #E2D9CE' }} className='rounded-full' />
+						{form === 'full' && <span className='font-averia mt-0.5 text-xl leading-none font-medium'>{siteContent.meta.title}</span>}
+						{form === 'full' && <span className='text-brand mt-1 text-xs font-medium'>(开发中)</span>}
 					</Link>
 
 					{(form === 'full' || form === 'icons') && (
 						<>
-							{form !== 'icons' && <div className='text-secondary mt-6 text-sm uppercase'>General</div>}
+							{form !== 'icons' && <div className='text-secondary mt-5 text-sm uppercase'>General</div>}
 
-							<div className={cn('relative mt-2 space-y-2', form === 'icons' && 'mt-0 flex items-center gap-6 space-y-0')}>
+							<div className={cn('relative mt-2 space-y-1.5', form === 'icons' && 'mt-0 flex items-center gap-7 space-y-0')}>
 								<motion.div
-									className='absolute max-w-[230px] rounded-full border'
+									className='absolute max-w-[200px] rounded-full border'
 									layoutId='nav-hover'
 									initial={false}
 									animate={
@@ -161,7 +161,7 @@ export default function NavCard() {
 													width: itemHeight + extraSize * 2,
 													height: itemHeight + extraSize * 2
 												}
-											: { top: hoveredIndex * (itemHeight + 8), left: 0, width: '100%', height: itemHeight }
+											: { top: hoveredIndex * (itemHeight + 5), left: 0, width: '100%', height: itemHeight }
 									}
 									transition={{
 										type: 'spring',
@@ -175,10 +175,10 @@ export default function NavCard() {
 									<Link
 										key={item.href}
 										href={item.href}
-										className={cn('text-secondary text-md relative z-10 flex items-center gap-3 rounded-full px-5 py-3', form === 'icons' && 'p-0')}
+										className={cn('text-secondary relative z-10 flex items-center gap-3 rounded-full px-4 py-2.5 text-base', form === 'icons' && 'p-0')}
 										onMouseEnter={() => setHoveredIndex(index)}>
-										<div className='flex h-7 w-7 items-center justify-center'>
-											{hoveredIndex == index ? <item.iconActive className='text-brand absolute h-7 w-7' /> : <item.icon className='absolute h-7 w-7' />}
+										<div className='flex h-6 w-6 items-center justify-center'>
+											{hoveredIndex == index ? <item.iconActive className='text-brand absolute h-6 w-6' /> : <item.icon className='absolute h-6 w-6' />}
 										</div>
 										{form !== 'icons' && <span className={clsx(index == hoveredIndex && 'text-primary font-medium')}>{item.label}</span>}
 									</Link>

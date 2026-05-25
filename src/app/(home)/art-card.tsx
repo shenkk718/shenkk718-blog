@@ -4,6 +4,13 @@ import { useConfigStore } from './stores/config-store'
 import { CARD_SPACING } from '@/consts'
 import { useRouter } from 'next/navigation'
 import { HomeDraggableLayer } from './home-draggable-layer'
+import { useMemo, useState } from 'react'
+import picturesList from '../pictures/list.json'
+
+type PictureItem = {
+	image?: string
+	images?: string[]
+}
 
 export default function ArtCard() {
 	const center = useCenterStore()
@@ -18,11 +25,22 @@ export default function ArtCard() {
 	const artImages = siteContent.artImages ?? []
 	const currentId = siteContent.currentArtImageId
 	const currentArt = (currentId ? artImages.find(item => item.id === currentId) : undefined) ?? artImages[0]
-	const artUrl = currentArt?.url || '/images/art/cat.png'
+	const pictureUrls = useMemo(() => {
+		const urls: string[] = []
+
+		for (const picture of picturesList as PictureItem[]) {
+			if (picture.image) urls.push(picture.image)
+			if (picture.images?.length) urls.push(...picture.images)
+		}
+
+		return urls.filter(url => url && !url.startsWith('blob:'))
+	}, [])
+	const [randomPictureUrl] = useState(() => (pictureUrls.length ? pictureUrls[Math.floor(Math.random() * pictureUrls.length)] : ''))
+	const artUrl = currentArt?.url ? `${currentArt.url}?v=${currentArt.id}` : randomPictureUrl || '/images/art/cat.png'
 
 	return (
 		<HomeDraggableLayer cardKey='artCard' x={x} y={y} width={styles.width} height={styles.height}>
-			<Card className='p-2 max-sm:static max-sm:translate-0' order={styles.order} width={styles.width} height={styles.height} x={x} y={y}>
+			<Card className='z-20 p-2 max-sm:static max-sm:translate-0' order={styles.order} width={styles.width} height={styles.height} x={x} y={y}>
 				{siteContent.enableChristmas && (
 					<>
 						<img
@@ -34,7 +52,7 @@ export default function ArtCard() {
 					</>
 				)}
 
-				<img onClick={() => router.push('/pictures')} src={artUrl} alt='wall art' className='h-full w-full rounded-[32px] object-cover' />
+				<img onClick={() => router.push('/pictures')} src={artUrl} alt='wall art' className='relative z-10 h-full w-full rounded-[32px] object-cover' />
 			</Card>
 		</HomeDraggableLayer>
 	)

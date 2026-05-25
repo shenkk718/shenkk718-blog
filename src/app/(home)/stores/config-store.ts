@@ -2,7 +2,15 @@ import { create } from 'zustand'
 import siteContent from '@/config/site-content.json'
 import cardStyles from '@/config/card-styles.json'
 
-export type SiteContent = typeof siteContent
+export type ConfigImage = {
+	id: string
+	url: string
+}
+
+export type SiteContent = Omit<typeof siteContent, 'artImages' | 'backgroundImages'> & {
+	artImages: ConfigImage[]
+	backgroundImages: ConfigImage[]
+}
 export type CardStyles = typeof cardStyles
 
 interface ConfigStore {
@@ -42,4 +50,3 @@ export const useConfigStore = create<ConfigStore>((set, get) => ({
 		set({ configDialogOpen: open })
 	}
 }))
-

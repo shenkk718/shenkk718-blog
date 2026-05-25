@@ -16,6 +16,13 @@
 	html {
 		@apply text-primary bg-bg h-full leading-tight;
 		scroll-behavior: smooth;
+		font-size: 15px;
+	}
+
+	@media (max-width: 640px) {
+		html {
+			font-size: 16px;
+		}
 	}
 
 	body {
@@ -92,7 +99,7 @@
 }
 
 @utility card {
-	@apply bg-card absolute rounded-[40px] border p-6;
+	@apply bg-card absolute rounded-[32px] border p-5;
 	box-shadow:
 		0 40px 50px -32px rgba(0, 0, 0, 0.05),
 		inset 0 0 20 rgba(255, 255, 255, 0.25);
@@ -101,16 +108,16 @@
 	&.squircle {
 		@supports (corner-shape: squircle) {
 			corner-shape: squircle;
-			@apply rounded-[64px];
+			@apply rounded-[52px];
 		}
 	}
 }
 
 @utility card-rounded {
-	@apply rounded-[40px];
+	@apply rounded-[32px];
 	@supports (corner-shape: squircle) {
 		corner-shape: squircle;
-		@apply rounded-[64px];
+		@apply rounded-[52px];
 	}
 }
 
@@ -140,6 +147,59 @@
 @utility brand-btn {
 	@apply bg-brand btn-rounded flex items-center gap-2 border-[1.5px] px-4 py-2 text-sm font-medium text-white;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.photo-cards {
+	perspective: 500px;
+	margin-inline: auto;
+}
+
+.photo-card {
+	width: 220px;
+	height: 280px;
+	background: rgba(22, 22, 29, 0.95);
+	border: 2px solid #555555;
+	border-radius: 28px;
+	position: relative;
+	transform-style: preserve-3d;
+	will-change: transform;
+	transition: transform 0.5s ease;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.photo-card:hover {
+	transform: translateZ(10px) rotateX(18deg) rotateY(18deg);
+}
+
+.photo-card__img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.photo-card__overlay {
+	pointer-events: none;
+}
+
+.photo-card__title {
+	color: #fff;
+	position: absolute;
+	bottom: 18px;
+	left: 18px;
+	right: 18px;
+	transform: translateY(0);
+	transition: transform 0.5s ease;
+	font: 700 1.2rem monospace;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
+}
+
+.photo-card:hover .photo-card__title {
+	transform: translateZ(30px);
 }
 
 @utility no-spinner {
@@ -175,4 +235,91 @@
 	.heartbeat {
 		animation: heartbeat-frame 0.8s ease-in-out;
 	}
+}
+
+@keyframes notes-marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+.notes-marquee-track {
+	width: max-content;
+	animation: notes-marquee 24s linear infinite;
+}
+
+.notes-marquee-reverse {
+	animation-direction: reverse;
+}
+
+.notes-marquee:hover .notes-marquee-track {
+	animation-play-state: paused;
+}
+
+@property --hi-orbit-angle {
+	syntax: '<angle>';
+	inherits: false;
+	initial-value: 0deg;
+}
+
+@keyframes hi-orbit-spin {
+	to {
+		--hi-orbit-angle: 360deg;
+	}
+}
+
+.hi-orbit-item {
+	--hi-orbit-start: 0deg;
+	--hi-orbit-radius: 230px;
+	--hi-orbit-duration: 18s;
+	animation: hi-orbit-spin var(--hi-orbit-duration) linear infinite;
+	transform: translate(-50%, -50%) rotate(calc(var(--hi-orbit-angle) + var(--hi-orbit-start))) translateX(var(--hi-orbit-radius))
+		rotate(calc(-1 * (var(--hi-orbit-angle) + var(--hi-orbit-start))));
+}
+
+.hi-orbit-avatar {
+	--hi-orbit-start: -90deg;
+	--hi-orbit-duration: 22s;
+}
+
+.hi-orbit-chrome {
+	--hi-orbit-start: 35deg;
+	--hi-orbit-duration: 14s;
+}
+
+.hi-orbit-gpt {
+	--hi-orbit-start: 155deg;
+	--hi-orbit-duration: 19s;
+}
+
+.hi-orbit:hover .hi-orbit-item {
+	animation-play-state: paused;
+}
+
+/* Article card expand on hover */
+.article-card-expand {
+	max-height: 0;
+	opacity: 0;
+	transition:
+		max-height 0.4s ease-in-out,
+		opacity 0.3s ease-in-out;
+}
+
+.article-card-wrapper {
+	background: #3d5a6e !important;
+	border-radius: 20px !important;
+	transition: height 0.4s ease-in-out !important;
+	overflow: hidden;
+}
+
+.article-card-wrapper:hover {
+	height: 185px !important;
+}
+
+.article-card-wrapper:hover .article-card-expand {
+	max-height: 120px;
+	opacity: 1;
 }

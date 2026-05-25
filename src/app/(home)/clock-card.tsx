@@ -18,6 +18,7 @@ export default function ClockCard() {
 	const styles = cardStyles.clockCard
 	const hiCardStyles = cardStyles.hiCard
 	const showSeconds = siteContent.clockShowSeconds ?? false
+	const shouldPinTopRight = center.width >= 768
 
 	useEffect(() => {
 		const interval = showSeconds ? 1000 : 5000
@@ -32,8 +33,12 @@ export default function ClockCard() {
 	const minutes = time.getMinutes().toString().padStart(2, '0')
 	const seconds = time.getSeconds().toString().padStart(2, '0')
 
-	const x = styles.offsetX !== null ? center.x + styles.offsetX : center.x + CARD_SPACING + hiCardStyles.width / 2
-	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.y - styles.offset - styles.height
+	const x = shouldPinTopRight
+		? center.width - styles.width - 48
+		: styles.offsetX !== null
+			? center.x + styles.offsetX
+			: center.x + CARD_SPACING + hiCardStyles.width / 2
+	const y = shouldPinTopRight ? 36 : styles.offsetY !== null ? center.y + styles.offsetY : center.y - styles.offset - styles.height
 
 	return (
 		<HomeDraggableLayer cardKey='clockCard' x={x} y={y} width={styles.width} height={styles.height}>

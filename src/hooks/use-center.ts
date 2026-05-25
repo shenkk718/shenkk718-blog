@@ -20,8 +20,9 @@ const computeCenter = () => {
 	}
 	const width = window.innerWidth
 	const height = window.innerHeight
+	const xOffset = width >= 1536 ? 208 : width >= 1280 ? 176 : width >= 1024 ? 144 : width >= 768 ? 96 : 0
 	return {
-		x: Math.floor(width / 2),
+		x: Math.floor(width / 2) - xOffset,
 		y: Math.floor(height / 2) - 24,
 		centerX: Math.floor(width / 2),
 		centerY: Math.floor(height / 2),
