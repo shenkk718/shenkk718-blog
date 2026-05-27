@@ -13,7 +13,7 @@ type LikeButtonProps = {
 	delay?: number
 }
 
-const ENDPOINT = process.env.NEXT_PUBLIC_LIKE_ENDPOINT || ''
+const ENDPOINT = process.env.NEXT_PUBLIC_LIKE_ENDPOINT || '/api/likes'
 
 export default function LikeButton({ slug = 'site', delay, className }: LikeButtonProps) {
 	slug = BLOG_SLUG_KEY + slug

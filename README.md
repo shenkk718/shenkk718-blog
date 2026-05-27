@@ -24,6 +24,11 @@
 - **目录导航** — 自动生成文章 TOC 侧栏
 - **本地保存** — 直接保存到本地文件系统，无需 GitHub 密钥
 
+### 点赞系统
+
+项目支持线上点赞（支持防刷限流，每天单 IP 限制一次）。点赞数据通过 Vercel KV 或 Upstash Redis 进行保存。
+在 Vercel 部署时，请在环境变量中绑定 **Vercel KV**（自动注入 `KV_REST_API_URL` 和 `KV_REST_API_TOKEN`）。
+
 ### 图片展示
 
 - **3D 图片轮播** — 透视旋转的立体卡片展示
@@ -49,7 +54,7 @@
 - **Live2D** — 虚拟形象展示
 - **RSS 订阅** — 自动生成 RSS Feed
 - **Sitemap** — 自动生成站点地图
-- **主题定制** — CSS 变量驱动，全局可配色
+- **主题定制** — CSS 变量驱动，全局可配色   
 - **Cloudflare 部署** — 通过 OpenNext 适配 Cloudflare Workers
 
 ## 开发
