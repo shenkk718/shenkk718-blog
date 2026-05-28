@@ -105,7 +105,7 @@ export default function Page() {
 				</div>
 			</div>
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='absolute top-4 right-6 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-24 right-8 z-40 flex gap-3 max-sm:hidden'>
 				{isEditMode ? (
 					<>
 						<motion.button
@@ -113,18 +113,23 @@ export default function Page() {
 							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
-							取消
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8] disabled:opacity-60'>
+							CANCEL
 						</motion.button>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={handleAdd}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
-							添加
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#FE7F2D] hover:text-[#233D4D]'>
+							ADD
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSave} disabled={isSaving} className='brand-btn px-6'>
-							{isSaving ? '保存中...' : buttonText}
+						<motion.button
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.95 }}
+							onClick={handleSave}
+							disabled={isSaving}
+							className='border border-[#233D4D] bg-[#233D4D] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#F5F1E8] transition-colors hover:bg-[#F5F1E8] hover:text-[#233D4D] disabled:opacity-60'>
+							{isSaving ? 'SAVING...' : 'SAVE'}
 						</motion.button>
 					</>
 				) : (
@@ -133,8 +138,8 @@ export default function Page() {
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsEditMode(true)}
-							className='bg-card rounded-xl border px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
-							编辑
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8]'>
+							EDIT PROJECTS
 						</motion.button>
 					)
 				)}

@@ -1,1 +1,74 @@
-[]
+[
+	{
+		"name": "Uiverse",
+		"logo": "https://uiverse.io/favicon.ico",
+		"url": "https://uiverse.io/elements",
+		"description": "完全开源的社区驱动型 UI 元素库。拥有上千种用 HTML、CSS 和 Tailwind 编写的按钮、卡片、加载动画和输入框，复制即可直接使用。",
+		"tags": ["UI样式"],
+		"stars": 5
+	},
+	{
+		"name": "Pinterest",
+		"logo": "https://www.pinterest.com/favicon.ico",
+		"url": "https://www.pinterest.com",
+		"description": "全球最大的创意与灵感分享平台。无论是 UI 设计、插画、摄影还是日常美学，你都能在这里找到源源不断的视觉参考和创意点子。",
+		"tags": ["设计灵感"],
+		"stars": 5
+	},
+	{
+		"name": "CodeInWord",
+		"logo": "https://www.codeinword.com/favicon.ico",
+		"url": "https://www.codeinword.com",
+		"description": "极其便利的代码高亮与排版转换工具。可以快速将各种语言的源代码着色，并一键转换，适合在文档、推文或演示中贴出美观的代码片段。",
+		"tags": ["效率工具"],
+		"stars": 4
+	},
+	{
+		"name": "Cult UI",
+		"logo": "https://www.cult-ui.com/favicon.ico",
+		"url": "https://www.cult-ui.com",
+		"description": "极具个性和先锋艺术感的交互 UI 动画和组件设计资源。包含大量开箱即用的前端交互范式，是提升网站逼格和独特调性的利器。",
+		"tags": ["UI样式"],
+		"stars": 5
+	},
+	{
+		"name": "Magic UI",
+		"logo": "https://magicui.design/favicon.ico",
+		"url": "https://magicui.design",
+		"description": "专为设计师与前端开发者打造的高级动效组件库。提供一系列精美的、具有极强视觉冲击力的微动画和流体排版组件，完美支持 React 与 Tailwind CSS。",
+		"tags": ["UI样式"],
+		"stars": 5
+	},
+	{
+		"name": "Vercel",
+		"logo": "https://vercel.com/favicon.ico",
+		"url": "https://vercel.com",
+		"description": "全球领先的前端一站式部署与托管平台。支持多框架开箱即用，提供了极致的 CDN 边缘节点网络和 Serverless 功能，让部署、扩容与版本回滚变得丝滑无比。",
+		"tags": ["项目部署"],
+		"stars": 5
+	},
+	{
+		"name": "Next.js 官方文档",
+		"logo": "https://nextjs.org/favicon.ico",
+		"url": "https://nextjs.org",
+		"description": "Next.js 是一个用于生产环境的 React 框架。它提供了生产环境所需的所有功能：混合静态和服务器渲染、TypeScript 支持、智能打包、路由预加载等，无需任何配置。",
+		"tags": ["前端框架"],
+		"stars": 5
+	},
+	{
+		"name": "Tailwind CSS",
+		"logo": "https://tailwindcss.com/favicons/favicon.ico",
+		"url": "https://tailwindcss.com",
+		"description": "一个功能类优先 of CSS 框架，集成了诸如 flex, pt-4, text-center 和 rotate-90 等类，它们能直接在标记语言中组合起来，构建出任何设计。",
+		"tags": ["UI样式"],
+		"stars": 5
+	},
+	{
+		"name": "Lucide 图标库",
+		"logo": "https://lucide.dev/favicon.ico",
+		"url": "https://lucide.dev",
+		"description": "一个美丽而一致的开源图标包，由社区共同开发维护，是从 Feather Icons 分支而来的高性能轻量级图标集，支持开箱即用的各种框架引入。",
+		"tags": ["UI样式"],
+		"stars": 4
+	}
+]

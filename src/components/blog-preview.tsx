@@ -6,6 +6,7 @@ import { useMarkdownRender } from '@/hooks/use-markdown-render'
 import { useSize } from '@/hooks/use-size'
 import { BlogSidebar } from '@/components/blog-sidebar'
 import { useConfigStore } from '@/app/(home)/stores/config-store'
+import ArchiveLoader from '@/components/archive-loader'
 
 type BlogPreviewProps = {
 	markdown: string
@@ -24,30 +25,34 @@ export function BlogPreview({ markdown, title, tags, date, summary, cover, slug 
 	const summaryInContent = siteContent.summaryInContent ?? false
 
 	if (loading) {
-		return <div className='text-secondary flex h-full items-center justify-center text-sm'>渲染中...</div>
+		return <ArchiveLoader label='RENDERING ARTICLE' fullScreen={false} />
 	}
 
 	return (
-		<div className='mx-auto flex max-w-[1000px] justify-center gap-5 px-5 pt-20 pb-8 max-sm:px-0'>
+		<div className='mx-auto flex max-w-[1280px] justify-center gap-6 px-8 pt-28 pb-16 text-[#233D4D] max-sm:block max-sm:px-4 max-sm:pt-24'>
 			<motion.article
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ delay: INIT_DELAY }}
-				className='card bg-article static flex-1 overflow-auto rounded-xl p-6'>
+				className='static flex-1 overflow-auto border border-[#233D4D] bg-[#F5F1E8] p-0'>
 				<div>
-					<div className='text-center text-xl font-semibold'>{title}</div>
+					<header className='border-b border-[#233D4D] px-8 py-8 max-sm:px-4'>
+						<p className='mb-5 text-xs font-black tracking-[0.34em] text-[#FE7F2D]'>ARCHIVE ENTRY</p>
+						<h1 className='max-w-[900px] text-[clamp(42px,7vw,96px)] leading-[0.86] font-black tracking-[-0.08em]'>{title}</h1>
 
-					<div className='text-secondary mt-3 flex flex-wrap items-center justify-center gap-2 px-6 text-center text-xs'>
-						{tags.map(t => (
-							<span key={t}>#{t}</span>
-						))}
-					</div>
+						<div className='mt-8 flex flex-wrap items-center gap-3 border-t border-[#233D4D] pt-4 font-mono text-xs uppercase tracking-[0.18em] text-[#233D4D]/72'>
+							<span>{date}</span>
+							{tags.map(t => (
+								<span key={t} className='border border-[#233D4D] px-2 py-1 text-[#233D4D]'>
+									#{t}
+								</span>
+							))}
+						</div>
 
-					<div className='text-secondary mt-2 text-center text-xs'>{date}</div>
+						{summary && summaryInContent && <div className='mt-6 max-w-2xl border-l border-[#FE7F2D] pl-4 text-sm leading-7 font-semibold text-[#233D4D]/72'>“{summary}”</div>}
+					</header>
 
-					{summary && summaryInContent && <div className='text-secondary mt-6 cursor-text text-center text-sm'>“{summary}”</div>}
-
-					<div className='prose prose-sm mt-5 max-w-none cursor-text'>{content}</div>
+					<div className='prose prose-sm max-w-none cursor-text px-8 py-10 max-sm:px-4'>{content}</div>
 				</div>
 			</motion.article>
 

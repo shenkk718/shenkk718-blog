@@ -67,32 +67,41 @@ export default function UploadDialog({ onClose, onSubmit }: UploadDialogProps) {
 	}
 
 	return (
-		<DialogModal open onClose={handleClose} className='card w-md max-sm:w-full'>
-			<div className='space-y-4'>
-				<h2 className='text-xl font-bold'>上传图片</h2>
+		<DialogModal open onClose={handleClose} className='w-md border border-[#233D4D] bg-[#F5F1E8] p-6 text-[#233D4D] max-sm:w-full'>
+			<div className='space-y-5'>
+				<div>
+					<p className='text-[10px] font-black tracking-[0.28em] text-[#FE7F2D]'>UPLOAD</p>
+					<h2 className='mt-1 text-xl font-black'>上传图片</h2>
+				</div>
 
 				<div>
-					<label className='text-secondary mb-2 block text-sm font-medium'>选择图片（可多选）</label>
+					<label className='mb-2 block text-xs font-black tracking-[0.12em] text-[#233D4D]/70'>选择图片（可多选）</label>
 					<input ref={fileInputRef} type='file' accept='image/*' multiple className='hidden' onChange={handleFileSelect} />
 
 					{images.length === 0 ? (
 						<div
 							onClick={() => fileInputRef.current?.click()}
-							className='flex h-32 cursor-pointer items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 transition-colors hover:bg-secondary/10'>
+							className='flex h-32 cursor-pointer items-center justify-center border border-dashed border-[#233D4D] bg-[#F5F1E8] transition-colors hover:bg-[#233D4D]/5'>
 							<div className='text-center'>
-								<Plus className='mx-auto mb-1 h-8 w-8 text-gray-500' />
-								<p className='text-secondary text-xs'>点击选择图片</p>
+								<Plus className='mx-auto mb-1 h-8 w-8 text-[#233D4D]/50' />
+								<p className='text-xs text-[#233D4D]/60'>点击选择图片</p>
 							</div>
 						</div>
 					) : (
 						<>
-							<div className='relative flex h-40 items-center justify-center overflow-visible rounded-xl bg-linear-to-br from-gray-50 to-gray-100'>
+							<div className='relative flex h-40 items-center justify-center overflow-visible border border-[#233D4D] bg-[#F5F1E8]'>
 								{images.slice(0, 3).map((image, index) =>
 									image.type === 'file' ? (
 										<div
 											key={index}
-											className={`absolute h-32 w-44 overflow-hidden rounded-xl border-4 border-white bg-white shadow-xl transition-transform ${
-												index === 0 ? '-left-4 -translate-y-2 -rotate-6' : index === 1 ? 'z-20 rotate-1' : 'right-0 translate-y-2 rotate-6'
+											className={`absolute h-32 w-44 overflow-hidden border border-[#233D4D] bg-[#F5F1E8] transition-transform ${
+												images.length === 1
+													? 'z-20'
+													: index === 0
+														? '-left-4 -translate-y-2 -rotate-6'
+														: index === 1
+															? 'z-20 rotate-1'
+															: 'right-0 translate-y-2 rotate-6'
 											}`}>
 											<img src={image.previewUrl} alt={`preview-${index}`} className='h-full w-full object-cover' />
 										</div>
@@ -100,16 +109,16 @@ export default function UploadDialog({ onClose, onSubmit }: UploadDialogProps) {
 								)}
 
 								{images.length > 3 && (
-									<div className='absolute right-4 -bottom-2 rounded-full bg-black/70 px-3 py-1 text-xs text-white shadow-lg'>共 {images.length} 张</div>
+									<div className='absolute right-4 -bottom-2 border border-[#233D4D] bg-[#233D4D] px-3 py-1 text-xs text-[#F5F1E8]'>共 {images.length} 张</div>
 								)}
 							</div>
 
 							<div className='mt-3 flex items-center justify-between'>
-								<span className='text-secondary text-xs'>已选择 {images.length} 张图片</span>
+								<span className='text-xs text-[#233D4D]/60'>已选择 {images.length} 张图片</span>
 								<button
 									type='button'
 									onClick={() => fileInputRef.current?.click()}
-									className='rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 transition-colors hover:bg-gray-50'>
+									className='border border-[#233D4D] bg-[#F5F1E8] px-3 py-1.5 text-xs font-black text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8]'>
 									继续添加
 								</button>
 							</div>
@@ -118,25 +127,28 @@ export default function UploadDialog({ onClose, onSubmit }: UploadDialogProps) {
 				</div>
 
 				<div>
-					<label className='text-secondary mb-2 block text-sm font-medium'>描述（可选，应用于本次所有图片）</label>
+					<label className='mb-2 block text-xs font-black tracking-[0.12em] text-[#233D4D]/70'>描述（可选，应用于本次所有图片）</label>
 					<textarea
 						value={description}
 						onChange={e => setDescription(e.target.value)}
 						placeholder='这组图片的说明...'
-						className='w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:outline-none'
+						className='w-full border border-[#233D4D] bg-[#F5F1E8] px-3 py-2 text-sm text-[#233D4D] focus:outline-none'
 						rows={3}
 					/>
 				</div>
 
-				<div className='mt-4 flex gap-3'>
+				<div className='mt-5 flex gap-3'>
 					<button
 						type='button'
 						onClick={handleClose}
-						className='flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm transition-colors hover:bg-gray-50'>
-						取消
+						className='flex-1 border border-[#233D4D] bg-[#F5F1E8] px-4 py-3 text-xs font-black tracking-[0.2em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8]'>
+						CANCEL
 					</button>
-					<button type='button' onClick={handleSubmit} className='brand-btn flex-1 justify-center px-4'>
-						确认上传
+					<button
+						type='button'
+						onClick={handleSubmit}
+						className='flex-1 border border-[#233D4D] bg-[#233D4D] px-4 py-3 text-xs font-black tracking-[0.2em] text-[#F5F1E8] transition-colors hover:bg-[#F5F1E8] hover:text-[#233D4D]'>
+						UPLOAD
 					</button>
 				</div>
 			</div>

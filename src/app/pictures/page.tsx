@@ -16,6 +16,7 @@ export interface Picture {
 	id: string
 	uploadedAt: string
 	description?: string
+	descriptions?: string[]
 	image?: string
 	images?: string[]
 }
@@ -138,6 +139,22 @@ export default function Page() {
 		})
 	}
 
+	const handleEditDescription = (pictureId: string, imageIndex: number | 'single', newDescription: string) => {
+		setPictures(prev =>
+			prev.map(picture => {
+				if (picture.id !== pictureId) return picture
+
+				if (imageIndex === 'single') {
+					return { ...picture, description: newDescription || undefined }
+				}
+
+				const descriptions = [...(picture.descriptions || picture.images?.map(() => picture.description || '') || [])]
+				descriptions[imageIndex] = newDescription
+				return { ...picture, descriptions }
+			})
+		)
+	}
+
 	const handleDeleteGroup = (picture: Picture) => {
 		if (!confirm('确定要删除这一组图片吗？')) return
 
@@ -197,42 +214,83 @@ export default function Page() {
 
 	return (
 		<>
-			<ThreeDPhotoCarousel pictures={pictures} isEditMode={isEditMode} onDeleteSingle={handleDeleteSingleImage} />
-			<MemoryStarCalendar pictures={pictures} />
+			<main className='min-h-screen bg-[#F5F1E8] px-8 pt-28 pb-20 text-[#233D4D] max-sm:px-4'>
+				<section className='mx-auto mb-12 grid max-w-[1440px] grid-cols-[0.95fr_1.05fr] gap-10 border-b border-[#233D4D] pb-10 max-lg:grid-cols-1'>
+					<div>
+						<p className='mb-5 text-xs font-black tracking-[0.34em] text-[#FE7F2D]'>IMAGE / MEMORY FIELD</p>
+						<h1 className='text-[clamp(64px,10vw,156px)] leading-[0.82] font-black tracking-[-0.09em]'>
+							PHOTO
+							<br />
+							ARCHIVE
+						</h1>
+					</div>
+					<div className='flex items-end justify-between gap-8 max-lg:block'>
+						<p className='max-w-xl border-l border-[#233D4D] pl-5 text-sm leading-7 font-semibold tracking-[0.04em] text-[#233D4D]/72 max-lg:border-l-0 max-lg:border-t max-lg:pt-5 max-lg:pl-0'>
+							A VISUAL INDEX OF DAILY FRAGMENTS, IMAGE SETS AND MEMORY RECORDS. ROTATE, OPEN AND INSPECT EVERY IMAGE AS A DIGITAL OBJECT.
+						</p>
+						<div className='flex shrink-0 items-center gap-3 max-lg:mt-6'>
+							<div className='border border-[#233D4D] px-4 py-3 font-mono text-xs'>
+								<span className='text-[#FE7F2D]'>{pictures.length}</span> GROUPS
+							</div>
+							<button
+								onClick={() => router.push('/pictures/gallery')}
+								className='border border-[#233D4D] bg-[#F5F1E8] px-4 py-3 text-xs font-black tracking-[0.2em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8]'>
+								GALLERY
+							</button>
+						</div>
+					</div>
+				</section>
+
+				<section className='mx-auto grid max-w-[1440px] grid-cols-[260px_1fr] gap-8 max-lg:grid-cols-1'>
+					<MemoryStarCalendar pictures={pictures} />
+					<div className='border border-[#233D4D] bg-[#F5F1E8]'>
+						<div className='flex items-center justify-between border-b border-[#233D4D] px-5 py-4'>
+							<p className='text-xs font-black tracking-[0.28em] text-[#FE7F2D]'>3D PHOTO CAROUSEL</p>
+							<p className='font-mono text-xs text-[#233D4D]/64'>CLICK ACTIVE IMAGE TO OPEN LENS VIEW</p>
+						</div>
+						<ThreeDPhotoCarousel pictures={pictures} isEditMode={isEditMode} onDeleteSingle={handleDeleteSingleImage} onEditDescription={handleEditDescription} />
+					</div>
+				</section>
+			</main>
 
 			{pictures.length === 0 && (
-				<div className='text-secondary flex min-h-screen items-center justify-center text-center text-sm'>
+				<div className='fixed inset-0 z-10 flex items-center justify-center bg-[#F5F1E8] text-center text-sm text-[#233D4D]/70'>
 					还没有上传图片，点击右上角「编辑」后即可开始上传。
 				</div>
 			)}
 
-			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='absolute top-4 right-6 z-20 flex gap-3 max-sm:hidden'>
+			<motion.div initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }} className='fixed top-24 right-8 z-40 flex gap-3 max-sm:hidden'>
 				{isEditMode ? (
 					<>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={() => router.push('/image-toolbox')}
-							className='rounded-xl border bg-blue-50 px-4 py-2 text-sm text-blue-700'>
-							压缩工具
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#FE7F2D]'>
+							TOOLBOX
 						</motion.button>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={handleCancel}
 							disabled={isSaving}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
-							取消
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8] disabled:opacity-60'>
+							CANCEL
 						</motion.button>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsUploadDialogOpen(true)}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm'>
-							上传
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#FE7F2D]'>
+							UPLOAD
 						</motion.button>
-						<motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleSave} disabled={isSaving} className='brand-btn px-6'>
-							{isSaving ? '保存中...' : buttonText}
+						<motion.button
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.95 }}
+							onClick={handleSave}
+							disabled={isSaving}
+							className='border border-[#233D4D] bg-[#233D4D] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#F5F1E8] transition-colors hover:bg-[#F5F1E8] hover:text-[#233D4D] disabled:opacity-60'>
+							{isSaving ? 'SAVING...' : 'SAVE'}
 						</motion.button>
 					</>
 				) : (
@@ -241,8 +299,8 @@ export default function Page() {
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsEditMode(true)}
-							className='rounded-xl border bg-white/60 px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80'>
-							编辑
+							className='border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8]'>
+							EDIT PHOTOS
 						</motion.button>
 					)
 				)}

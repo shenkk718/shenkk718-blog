@@ -17,6 +17,10 @@
 		@apply text-primary bg-bg h-full leading-tight;
 		scroll-behavior: smooth;
 		font-size: 15px;
+		--archive-cream: #f5f1e8;
+		--archive-navy: #233d4d;
+		--archive-orange: #fe7f2d;
+		--archive-border: 1px solid var(--archive-navy);
 	}
 
 	@media (max-width: 640px) {
@@ -27,6 +31,34 @@
 
 	body {
 		@apply h-full bg-none;
+		background:
+			linear-gradient(90deg, color-mix(in srgb, var(--archive-navy) 6%, transparent) 1px, transparent 1px),
+			linear-gradient(180deg, color-mix(in srgb, var(--archive-navy) 5%, transparent) 1px, transparent 1px),
+			var(--archive-cream);
+		background-size: 96px 96px;
+		color: var(--archive-navy);
+		font-feature-settings:
+			'kern' 1,
+			'liga' 1,
+			'calt' 1;
+	}
+
+	body::before {
+		content: '';
+		pointer-events: none;
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		opacity: 0.035;
+		mix-blend-mode: multiply;
+		background-image:
+			radial-gradient(circle at 20% 30%, #000 0 1px, transparent 1px),
+			radial-gradient(circle at 70% 60%, #000 0 1px, transparent 1px),
+			radial-gradient(circle at 40% 80%, #000 0 1px, transparent 1px);
+		background-size:
+			3px 3px,
+			5px 5px,
+			7px 7px;
 	}
 	* {
 		@apply border-border;
@@ -99,25 +131,26 @@
 }
 
 @utility card {
-	@apply bg-card absolute rounded-[32px] border p-5;
-	box-shadow:
-		0 40px 50px -32px rgba(0, 0, 0, 0.05),
-		inset 0 0 20 rgba(255, 255, 255, 0.25);
-	backdrop-filter: blur(4px);
+	@apply absolute border p-5;
+	background: transparent;
+	border: var(--archive-border);
+	border-radius: 0;
+	box-shadow: none;
+	backdrop-filter: none;
 
 	&.squircle {
 		@supports (corner-shape: squircle) {
-			corner-shape: squircle;
-			@apply rounded-[52px];
+			corner-shape: initial;
+			@apply rounded-none;
 		}
 	}
 }
 
 @utility card-rounded {
-	@apply rounded-[32px];
+	@apply rounded-none;
 	@supports (corner-shape: squircle) {
-		corner-shape: squircle;
-		@apply rounded-[52px];
+		corner-shape: initial;
+		@apply rounded-none;
 	}
 }
 
@@ -129,8 +162,8 @@
 }
 
 @utility bg-linear {
-	background: linear-gradient(to right bottom, var(--color-brand) 0%, var(--color-brand-secondary));
-	color: white;
+	background: var(--archive-navy);
+	color: var(--archive-cream);
 }
 
 @utility shadow {
@@ -138,15 +171,85 @@
 }
 
 @utility btn-rounded {
-	@apply rounded-xl;
+	@apply rounded-none;
 	@supports (corner-shape: squircle) {
-		corner-shape: squircle;
-		@apply rounded-2xl;
+		corner-shape: initial;
+		@apply rounded-none;
 	}
 }
 @utility brand-btn {
-	@apply bg-brand btn-rounded flex items-center gap-2 border-[1.5px] px-4 py-2 text-sm font-medium text-white;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	@apply btn-rounded flex items-center gap-2 px-4 py-2 text-sm font-bold;
+	background: transparent;
+	border: var(--archive-border);
+	color: var(--archive-navy);
+	box-shadow: none;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
+	&:hover {
+		background: var(--archive-navy);
+		color: var(--archive-cream);
+	}
+}
+
+.archive-spinner {
+	width: 70.4px;
+	height: 70.4px;
+	--clr: #fe7f2d;
+	--clr-alpha: rgb(254 127 45 / 0.1);
+	animation: archive-spinner 1.6s infinite ease;
+	position: relative;
+	transform-style: preserve-3d;
+}
+
+.archive-spinner > div {
+	background-color: var(--clr-alpha);
+	height: 100%;
+	position: absolute;
+	width: 100%;
+	border: 3.5px solid var(--clr);
+}
+
+.archive-spinner div:nth-of-type(1) {
+	transform: translateZ(-35.2px) rotateY(180deg);
+}
+
+.archive-spinner div:nth-of-type(2) {
+	transform: rotateY(-270deg) translateX(50%);
+	transform-origin: top right;
+}
+
+.archive-spinner div:nth-of-type(3) {
+	transform: rotateY(270deg) translateX(-50%);
+	transform-origin: center left;
+}
+
+.archive-spinner div:nth-of-type(4) {
+	transform: rotateX(90deg) translateY(-50%);
+	transform-origin: top center;
+}
+
+.archive-spinner div:nth-of-type(5) {
+	transform: rotateX(-90deg) translateY(50%);
+	transform-origin: bottom center;
+}
+
+.archive-spinner div:nth-of-type(6) {
+	transform: translateZ(35.2px);
+}
+
+@keyframes archive-spinner {
+	0% {
+		transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+	}
+
+	50% {
+		transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+	}
+
+	100% {
+		transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+	}
 }
 
 .photo-cards {

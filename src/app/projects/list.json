@@ -2,7 +2,7 @@
 	{
 		"name": "基于区块链的游戏虚拟资产管理系统设计与实现",
 		"year": 2026,
-		"image": "blob:http://localhost:2025/7595d774-9ceb-454f-84fe-fbe25d58fe2e",
+		"image": "/images/project/0bedfb9bf73695da.png",
 		"url": "http://localhost:3001",
 		"description": "随着区块链技术发展与数字经济兴起，游戏虚拟资产的确权与交易成为关键问题。本文设计并实现了一套基于以太坊的游戏虚拟资产管理系统，采用 ERC-721 标准实现资产链上确权。系统采用前后端链三层架构：前端基于 EJS 与 JavaScript，通过 MetaMask 实现链上交互；后端基于 Node.js+Express+MySQL 提供 RESTful API，JWT 实现认证；区块链层部署资产与拍卖合约，支持铸造、交易与竞价，资产数据存储于 IPFS。系统实现了资产全生命周期管理，含创建、发行、转售、拍卖、空投等核心功能，并提供战力聚合、活跃度排名与后台监控。安全上通过拉取模式与 ReentrancyGuard 防范重入攻击，服务端代付 Gas 降低用户门槛。测试表明系统功能正确、安全可靠，达到预期目标。",
 		"tags": [
@@ -13,7 +13,7 @@
 		"name": "个人博客系统",
 		"year": 2026,
 		"image": "/images/project/0f95ec06f8e5e031.png",
-		"url": "http://localhost:2025",
+		"url": "https://shenkk718-blog.vercel.app/",
 		"description": "这是一个集个人主页、博客写作、图片管理、项目展示、随笔记录于一体的轻量个人站点系统，核心亮点包括：可拖拽卡片式首页布局、Markdown 博客编辑器（支持代码高亮 / 数学公式 / 本地保存）、3D 图片轮播与日历展示、项目在线管理、侧面板随笔写作，同时内置音乐播放器、图片压缩、Live2D、RSS 订阅、站点地图生成等辅助功能，并支持 CSS 变量主题定制，可一键部署到 Cloudflare Workers。\n",
 		"tags": [
 			"基于 Next.js、React、TypeScript 和 Tailwind CSS 开发"

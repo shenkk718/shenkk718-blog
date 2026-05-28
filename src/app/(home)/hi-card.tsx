@@ -160,8 +160,12 @@ export default function HiCard() {
 	const introLines: string[] = (siteContent as any).introLines ?? DEFAULT_INTRO
 	const [editOpen, setEditOpen] = useState(false)
 
-	const x = styles.offsetX !== null ? center.x + styles.offsetX : center.x - styles.width / 2
-	const y = styles.offsetY !== null ? center.y + styles.offsetY : center.y - styles.height / 2 + 40
+	const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1440
+	const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 900
+	const defaultX = viewportWidth - styles.width - 180
+	const defaultY = Math.max(120, viewportHeight * 0.18)
+	const x = defaultX + (styles.offsetX ?? 0)
+	const y = defaultY + (styles.offsetY ?? 0)
 
 	return (
 		<HomeDraggableLayer cardKey='hiCard' x={x} y={y} width={styles.width} height={styles.height}>

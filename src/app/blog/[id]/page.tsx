@@ -8,6 +8,7 @@ import { BlogPreview } from '@/components/blog-preview'
 import { loadBlog, type BlogConfig } from '@/lib/load-blog'
 import { useReadArticles } from '@/hooks/use-read-articles'
 import LiquidGrass from '@/components/liquid-grass'
+import ArchiveLoader from '@/components/archive-loader'
 
 export default function Page() {
 	const params = useParams() as { id?: string | string[] }
@@ -57,7 +58,7 @@ export default function Page() {
 	}
 
 	if (loading) {
-		return <div className='text-secondary flex h-full items-center justify-center text-sm'>加载中...</div>
+		return <ArchiveLoader label='LOADING ARTICLE' />
 	}
 
 	if (error) {
@@ -86,8 +87,8 @@ export default function Page() {
 				whileHover={{ scale: 1.05 }}
 				whileTap={{ scale: 0.95 }}
 				onClick={handleEdit}
-				className='absolute top-4 right-6 rounded-xl border bg-white/60 px-6 py-2 text-sm backdrop-blur-sm transition-colors hover:bg-white/80 max-sm:hidden'>
-				编辑
+				className='fixed top-24 right-8 z-40 border border-[#233D4D] bg-[#F5F1E8] px-5 py-3 text-xs font-black tracking-[0.24em] text-[#233D4D] transition-colors hover:bg-[#233D4D] hover:text-[#F5F1E8] max-sm:hidden'>
+				EDIT
 			</motion.button>
 
 			{slug === 'liquid-grass' && <LiquidGrass />}

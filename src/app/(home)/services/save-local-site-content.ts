@@ -1,8 +1,7 @@
 import { fileToBase64NoPrefix } from '@/lib/file-utils'
-import { getFileExt } from '@/lib/utils'
 import { toast } from 'sonner'
 import type { SiteContent, CardStyles } from '../stores/config-store'
-import type { ArtImageUploads, BackgroundImageUploads, FileItem, SocialButtonImageUploads } from '../config-dialog/site-settings'
+import type { FileItem } from '../config-dialog/site-settings'
 
 type LocalFilePayload = {
 	key: string
@@ -10,23 +9,11 @@ type LocalFilePayload = {
 	content: string
 }
 
-async function toPayload(key: string, publicPath: string, item: FileItem): Promise<LocalFilePayload | null> {
-	if (item.type !== 'file') return null
-	return {
-		key,
-		path: publicPath,
-		content: await fileToBase64NoPrefix(item.file)
-	}
-}
-
 export async function saveLocalSiteContent(
 	siteContent: SiteContent,
 	cardStyles: CardStyles,
 	faviconItem?: FileItem | null,
-	avatarItem?: FileItem | null,
-	artImageUploads?: ArtImageUploads,
-	backgroundImageUploads?: BackgroundImageUploads,
-	socialButtonImageUploads?: SocialButtonImageUploads
+	avatarItem?: FileItem | null
 ): Promise<void> {
 	toast.info('正在准备本地配置...')
 
@@ -38,35 +25,6 @@ export async function saveLocalSiteContent(
 
 	if (avatarItem?.type === 'file') {
 		files.push({ key: 'avatar', path: '/images/avatar.png', content: await fileToBase64NoPrefix(avatarItem.file) })
-	}
-
-	if (artImageUploads) {
-		for (const [id, item] of Object.entries(artImageUploads)) {
-			const art = siteContent.artImages?.find(image => image.id === id)
-			if (!art || !art.url.startsWith('/images/art/')) continue
-			const payload = await toPayload(id, art.url, item)
-			if (payload) files.push(payload)
-		}
-	}
-
-	if (backgroundImageUploads) {
-		for (const [id, item] of Object.entries(backgroundImageUploads)) {
-			const background = siteContent.backgroundImages?.find(image => image.id === id)
-			if (!background || !background.url.startsWith('/images/background/')) continue
-			const payload = await toPayload(id, background.url, item)
-			if (payload) files.push(payload)
-		}
-	}
-
-	if (socialButtonImageUploads) {
-		for (const [id, item] of Object.entries(socialButtonImageUploads)) {
-			const button = siteContent.socialButtons?.find(button => button.id === id)
-			if (!button || !button.value.startsWith('/images/social-buttons/')) continue
-			const ext = item.type === 'file' ? getFileExt(item.file.name) : ''
-			const path = button.value.includes('.') ? button.value : `/images/social-buttons/${id}${ext || '.png'}`
-			const payload = await toPayload(id, path, item)
-			if (payload) files.push(payload)
-		}
 	}
 
 	toast.info('正在保存到本地...')

@@ -8,6 +8,7 @@ import { WriteEditor } from '../components/editor'
 import { WriteSidebar } from '../components/sidebar'
 import { WriteActions } from '../components/actions'
 import { WritePreview } from '../components/preview'
+import ArchiveLoader from '@/components/archive-loader'
 
 export default function EditBlogPage() {
 	const params = useParams() as { slug?: string }
@@ -20,7 +21,7 @@ export default function EditBlogPage() {
 	const coverPreviewUrl = cover ? (cover.type === 'url' ? cover.url : cover.previewUrl) : null
 
 	if (loading) {
-		return <div className='text-secondary flex h-screen items-center justify-center text-sm'>加载中...</div>
+		return <ArchiveLoader label='LOADING EDITOR' />
 	}
 
 	if (!slug) {
